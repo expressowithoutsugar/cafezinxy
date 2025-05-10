@@ -1,5 +1,4 @@
-
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
@@ -16,7 +15,7 @@
 
     h1 {
       position: absolute;
-      top: 30%;
+      top: 25%;
       width: 100%;
       text-align: center;
       font-size: 3em;
@@ -27,11 +26,12 @@
     .rosa {
       position: absolute;
       top: -100px;
-      width: 50px;
-      height: 50px;
-      background-image: url('https://cdn-icons-png.flaticon.com/512/2909/2909765.png'); /* Rosa real agora */
+      width: 40px;
+      height: 40px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/7662/7662543.png'); /* rosa de verdade */
       background-size: cover;
       animation: cair 10s linear infinite;
+      pointer-events: none;
     }
 
     @keyframes cair {
@@ -64,29 +64,18 @@
     .botao:hover {
       background-color: #c2185b;
     }
-
-    #player {
-      display: none;
-    }
   </style>
 </head>
 <body>
   <h1>Feliz Dia das Mães</h1>
+  <button class="botao" onclick="tocarMusica()">Clique aqui para ouvir Dona de Mim</button>
 
-  <button class="botao" onclick="tocarMusica()">Clique aqui</button>
-
-  <div id="player">
-    <iframe id="ytplayer" width="0" height="0" 
-      src=""
-      frameborder="0"
-      allow="autoplay"
-      allowfullscreen></iframe>
-  </div>
+  <audio id="musica" src="https://cdn.pixabay.com/download/audio/2022/03/31/audio_90b7a3fa5c.mp3?filename=calm-piano-116199.mp3"></audio>
 
   <script>
     function tocarMusica() {
-      const iframe = document.getElementById('ytplayer');
-      iframe.src = "https://www.youtube.com/embed/LN4L_rQGB4k?autoplay=1";
+      const audio = document.getElementById("musica");
+      audio.play();
     }
 
     for (let i = 0; i < 30; i++) {
@@ -100,4 +89,3 @@
   </script>
 </body>
 </html>
-
