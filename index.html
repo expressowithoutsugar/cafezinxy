@@ -43,21 +43,16 @@
       align-items: center;
       justify-content: center;
       animation: none;
+      overflow: hidden;
+      position: relative;
     }
 
-    .vinyl::after {
-      content: "";
-      width: 20px;
-      height: 20px;
-      background-color: red;
+    .vinyl img {
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
+      object-fit: cover;
       z-index: 2;
-    }
-
-    .play-text {
-      margin-top: 10px;
-      font-size: 1.2em;
-      font-weight: bold;
     }
 
     .rotate {
@@ -70,6 +65,25 @@
       opacity: 0;
       position: absolute;
       pointer-events: none;
+    }
+
+    .play-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff69b4;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.05);
+      background-color: #ff85c1;
     }
 
     @keyframes spin {
@@ -116,14 +130,17 @@
   <h1>FELIZ DIA DAS MÃES</h1>
 
   <div class="vinyl-wrapper" onclick="playMusic()">
-    <div class="vinyl" id="vinyl"></div>
+    <div class="vinyl" id="vinyl">
+      <img src="https://upload.wikimedia.org/wikipedia/pt/6/60/Dona_de_Mim_-_IZA.png" alt="Capa Dona de Mim">
+    </div>
     <iframe 
       id="ytplayer"
       src="https://www.youtube.com/embed/FnGfgb_YNE8?enablejsapi=1&loop=1&playlist=FnGfgb_YNE8"
       frameborder="0" allow="autoplay"
     ></iframe>
   </div>
-  <div class="play-text">Toque aqui</div>
+
+  <button class="play-btn" onclick="playMusic()">Toque aqui</button>
 
   <script>
     function createHeart() {
@@ -139,7 +156,6 @@
     function playMusic() {
       const vinyl = document.getElementById('vinyl');
       vinyl.classList.add('rotate');
-
       const player = document.getElementById('ytplayer').contentWindow;
       player.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
