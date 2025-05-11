@@ -31,6 +31,7 @@
       height: 200px;
       margin-top: 30px;
       z-index: 1;
+      cursor: pointer;
     }
 
     .vinyl {
@@ -38,10 +39,10 @@
       height: 100%;
       border-radius: 50%;
       background: radial-gradient(circle, #000 60%, #444 61%, #000 100%);
-      animation: spin 5s linear infinite;
       display: flex;
       align-items: center;
       justify-content: center;
+      animation: none;
     }
 
     .vinyl::after {
@@ -53,11 +54,22 @@
       z-index: 2;
     }
 
+    .play-text {
+      margin-top: 10px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .rotate {
+      animation: spin 5s linear infinite;
+    }
+
     iframe {
-      position: absolute;
       width: 1px;
       height: 1px;
       opacity: 0;
+      position: absolute;
+      pointer-events: none;
     }
 
     @keyframes spin {
@@ -95,27 +107,23 @@
     }
 
     @keyframes fall {
-      0% {
-        top: -10%;
-        opacity: 1;
-      }
-      100% {
-        top: 110%;
-        opacity: 0;
-      }
+      0% { top: -10%; opacity: 1; }
+      100% { top: 110%; opacity: 0; }
     }
   </style>
 </head>
 <body>
   <h1>FELIZ DIA DAS MÃES</h1>
 
-  <div class="vinyl-wrapper">
-    <div class="vinyl"></div>
+  <div class="vinyl-wrapper" onclick="playMusic()">
+    <div class="vinyl" id="vinyl"></div>
     <iframe 
-      src="https://www.youtube.com/embed/FnGfgb_YNE8?autoplay=1&loop=1&playlist=FnGfgb_YNE8" 
-      allow="autoplay" allowfullscreen>
-    </iframe>
+      id="ytplayer"
+      src="https://www.youtube.com/embed/FnGfgb_YNE8?enablejsapi=1&loop=1&playlist=FnGfgb_YNE8"
+      frameborder="0" allow="autoplay"
+    ></iframe>
   </div>
+  <div class="play-text">Toque aqui</div>
 
   <script>
     function createHeart() {
@@ -124,13 +132,22 @@
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
       document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 300);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
+    function playMusic() {
+      const vinyl = document.getElementById('vinyl');
+      vinyl.classList.add('rotate');
+
+      const player = document.getElementById('ytplayer').contentWindow;
+      player.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
 
-    setInterval(createHeart, 300);
+    // Inicializa a API do YouTube
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
   </script>
 </body>
 </html>
