@@ -21,8 +21,9 @@
     }
 
     h1 {
-      font-size: 3em;
+      font-size: 2.5em;
       z-index: 1;
+      text-align: center;
     }
 
     .vinyl-wrapper {
@@ -48,8 +49,8 @@
     }
 
     .vinyl img {
-      width: 70px;
-      height: 70px;
+      width: 75px;
+      height: 75px;
       border-radius: 50%;
       object-fit: cover;
       z-index: 2;
@@ -160,7 +161,6 @@
       player.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
 
-    // Inicializa a API do YouTube
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     document.body.appendChild(tag);
