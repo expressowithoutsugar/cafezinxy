@@ -1,169 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Abra aqui 👻</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: pink;
-      overflow: hidden;
-      font-family: 'Arial', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      color: #fff;
-      text-shadow: 2px 2px 5px #d63384;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loader Centralizado</title>
+    <style>
+        /* Estilos básicos para o loader (você pode precisar dos estilos específicos do Uiverse.io) */
+        .terminal-loader {
+            background-color: #222;
+            color: #eee;
+            width: 300px;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px; /* Adiciona um pouco de margem ao redor */
+        }
 
-    h1 {
-      font-size: 2.5em;
-      z-index: 1;
-      text-align: center;
-    }
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #333;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
 
-    .vinyl-wrapper {
-      position: relative;
-      width: 200px;
-      height: 200px;
-      margin-top: 30px;
-      z-index: 1;
-      cursor: pointer;
-    }
+        .terminal-title {
+            flex-grow: 1;
+        }
 
-    .vinyl {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: radial-gradient(circle, #000 60%, #444 61%, #000 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: none;
-      overflow: hidden;
-      position: relative;
-    }
+        .terminal-controls {
+            display: flex;
+        }
 
-    .vinyl img {
-      width: 75px;
-      height: 75px;
-      border-radius: 50%;
-      object-fit: cover;
-      z-index: 2;
-    }
+        .control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
 
-    .rotate {
-      animation: spin 5s linear infinite;
-    }
+        .close {
+            background-color: #ff605c;
+        }
 
-    iframe {
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      position: absolute;
-      pointer-events: none;
-    }
+        .minimize {
+            background-color: #ffbd44;
+        }
 
-    .play-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #ff69b4;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-size: 1.2em;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
-    }
+        .maximize {
+            background-color: #00ca56;
+        }
 
-    .play-btn:hover {
-      transform: scale(1.05);
-      background-color: #ff85c1;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: red;
-      transform: rotate(45deg);
-      animation: fall 6s linear infinite;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: red;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      top: 0;
-      left: -10px;
-    }
-
-    @keyframes fall {
-      0% { top: -10%; opacity: 1; }
-      100% { top: 110%; opacity: 0; }
-    }
-  </style>
+        .text {
+            padding: 20px;
+            font-family: monospace;
+        }
+    </style>
 </head>
 <body>
-  <h1>FELIZ DIA DAS MÃES</h1>
+    <center>
+        <div class="terminal-loader">
+            <div class="terminal-header">
+                <div class="terminal-title">Status</div>
+                <div class="terminal-controls">
+                    <div class="control close"></div>
+                    <div class="control minimize"></div>
+                    <div class="control maximize"></div>
+                </div>
+            </div>
+            <div class="text">Loading...</div>
+        </div>
+    </center>
 
-  <div class="vinyl-wrapper" onclick="playMusic()">
-    <div class="vinyl" id="vinyl">
-      <img src="https://upload.wikimedia.org/wikipedia/pt/6/60/Dona_de_Mim_-_IZA.png" alt="Capa Dona de Mim">
-    </div>
-    <iframe 
-      id="ytplayer"
-      src="https://www.youtube.com/embed/FnGfgb_YNE8?enablejsapi=1&loop=1&playlist=FnGfgb_YNE8"
-      frameborder="0" allow="autoplay"
-    ></iframe>
-  </div>
-
-  <button class="play-btn" onclick="playMusic()">Toque aqui</button>
-
-  <script>
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }
-    setInterval(createHeart, 300);
-
-    function playMusic() {
-      const vinyl = document.getElementById('vinyl');
-      vinyl.classList.add('rotate');
-      const player = document.getElementById('ytplayer').contentWindow;
-      player.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-    }
-
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-  </script>
-</body>
+    </body>
 </html>
